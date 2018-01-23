@@ -105,6 +105,7 @@ while (time_list[idx0] + 1 < time_list[-1]) do
   # 配列初期化
   time0  = time_list[idx0]
   mean   = Array.new( num, miss )  # 欠損値
+  mean2   = Array.new( num, miss )  # 欠損値
   min    = Array.new( num, miss )  # 欠損値
   max    = Array.new( num, miss )  # 欠損値
   stddev = Array.new( num, miss )  # 欠損値
@@ -118,10 +119,11 @@ while (time_list[idx0] + 1 < time_list[-1]) do
   unless ( idx2 )
     num.times do |i|
       mean[i]  = vars_list_narray[i][idx0+1..idx1].mean(0)
-      min[i]   = # ... 自分で書く ...
-      max[i]   = # ... 自分で書く ...
-      stddev[i]= # ... 自分で書く ...
-      median[i]= # ... 自分で書く ...
+      mean2[i] = vars_list_narray[i][idx0+9..idx0+16].mean(0)
+      min[i]   = vars_list_narray[i][idx0+1..idx1].min(0) 
+      max[i]   = vars_list_narray[i][idx0+1..idx1].max(0) 
+      stddev[i]= vars_list_narray[i][idx0+1..idx1].stddev(0)
+      median[i]= vars_list_narray[i][idx0+1..idx1].median(0) 
     end
   end      
 
@@ -129,8 +131,15 @@ while (time_list[idx0] + 1 < time_list[-1]) do
   csv = open("#{pubdir}/#{myid}_mean.csv", "a")
   csv.puts "#{time0.strftime("%Y/%m/%d")},#{mean.join(',')},\n"
   csv.close
-  # 最小・最大・標準偏差・中央値のファイル出力
-  # ... 自分で書く ...
+  # 最小・最大のファイル出力
+  csv = open("#{pubdir}/#{myid}_min.csv", "a")
+  csv.puts "#{time0.strftime("%Y/%m/%d")},#{min.join(',')},\n"
+  csv.close
+
+
+  csv = open("#{pubdir}/#{myid}_max.csv", "a")
+  csv.puts "#{time0.strftime("%Y/%m/%d")},#{max.join(',')},\n"
+  csv.close
 
   # 添字の更新
   idx0 = idx1 
