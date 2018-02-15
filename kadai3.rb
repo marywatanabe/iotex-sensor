@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 # coding: utf-8
 #
-# 表題: グラフ作成のためのスクリプト. CSV ファイル利用版.
+# 課題3 by 藤原実里
 #
 require 'csv'
 require 'date'
@@ -59,7 +59,7 @@ miss = 999.9
   end
   p "plot from #{time_list["iot-07"][0]} to #{time_list["iot-07"][-1]}"
   
-  # 温度グラフ作成.
+  # 温度グラフ作成
   Numo.gnuplot do
     #    debug_on
     set ylabel:   "temperature (C)"
@@ -72,7 +72,6 @@ miss = 999.9
     set output:   "#{pubdir_temp}/iot-06_iot-07_iot-08_iot-09_iot-10_temp_#{time_from.strftime("%Y%m%d")}.png"
     set :datafile, :missing, "#{miss}" # 欠損値
     set :nokey # 凡例なし
-    # set key: "box" #凡例あり
 
     plot [time_list["iot-06"], temp_list["iot-06"], using:'1:($2)', with:"lines", lc_rgb:"red", lw:2, title:"221講義室"],
     [time_list["iot-07"], temp_list["iot-07"], using:'1:($2)', with:"lines", lc_rgb:"blue", lw:2, title:"222講義室"],
@@ -81,7 +80,7 @@ miss = 999.9
     [time_list["iot-10"], temp_list["iot-10"], using:'1:($2)', with:"lines", lc_rgb:"black", lw:2, title:"225講義室"]
   end
 
-  # 湿度グラフ作成 (各自で書くこと).
+  # 湿度グラフ作成
   Numo.gnuplot do
     #    debug_on
     set ylabel:   "humidity (%)"
@@ -94,7 +93,6 @@ miss = 999.9
     set output:   "#{pubdir_humi}/iot-06_iot-07_iot-08_iot-09_iot-10_temp_#{time_from.strftime("%Y%m%d")}.png"
     set :datafile, :missing, "#{miss}" # 欠損値
     set :nokey # 凡例なし
-    # set key: "box" #凡例あり
 
     plot [time_list["iot-06"], humi_list["iot-06"], using:'1:($2)', with:"lines", lc_rgb:"red", lw:2, title:"221講義室"],
     [time_list["iot-07"], humi_list["iot-07"], using:'1:($2)', with:"lines", lc_rgb:"blue", lw:2, title:"222講義室"],
@@ -103,7 +101,7 @@ miss = 999.9
     [time_list["iot-10"], humi_list["iot-10"], using:'1:($2)', with:"lines", lc_rgb:"black", lw:2, title:"225講義室"]
   end
 
-  # 不快指数グラフ作成 (各自で書くこと).
+  # 不快指数グラフ作成 
   Numo.gnuplot do
     #    debug_on
     set ylabel:   "discomfort index"
@@ -116,7 +114,6 @@ miss = 999.9
     set output:   "#{pubdir_didx}/iot-06_iot-07_iot-08_iot-09_iot-10_temp_#{time_from.strftime("%Y%m%d")}.png"
     set :datafile, :missing, "#{miss}" # 欠損値
     set :nokey # 凡例なし
-    # set key: "box" #凡例あり
 
     plot [time_list["iot-06"], humi_list["iot-06"], using:'1:($2)', with:"lines", lc_rgb:"red", lw:2, title:"221講義室"],
     [time_list["iot-07"], didx_list["iot-07"], using:'1:($2)', with:"lines", lc_rgb:"blue", lw:2, title:"222講義室"],
@@ -124,6 +121,5 @@ miss = 999.9
     [time_list["iot-09"], didx_list["iot-09"], using:'1:($2)', with:"lines", lc_rgb:"yellow", lw:2, title:"224講義室"],
     [time_list["iot-10"], didx_list["iot-10"], using:'1:($2)', with:"lines", lc_rgb:"black", lw:2, title:"225講義室"]
   end
-
   
 end
